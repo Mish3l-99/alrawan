@@ -1,9 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Noto Naskh Arabic", -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+    sans-serif;
 }
 
 a {
@@ -13,4 +18,154 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+div.ql-editor {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+div.ql-editor > * {
+  text-align: right !important;
+  direction: rtl !important;
+}
+
+@layer base {
+  body {
+    /* @apply text-black; */
+  }
+  button {
+    @apply px-3 py-1 text-lg md:text-xl cursor-pointer;
+  }
+
+  .btn {
+    @apply rounded px-4 py-1;
+  }
+  .btn-main {
+    @apply bg-gradient-to-r from-[#d61f35] to-black text-white px-8 hover:from-black hover:to-black hover:text-[#d61f35] hover:scale-95 duration-500;
+  }
+  .btn-green {
+    @apply bg-green-700 text-white;
+  }
+  .btn-outline {
+    @apply bg-transparent border border-[var(--primary)] text-[var(--primary)];
+  }
+  .nav-container {
+    @apply w-full px-5 md:px-3 py-2 flex gap-x-24 text-gray-900 items-center;
+  }
+  #navbar li {
+    @apply mx-2 px-2 hover:text-[#d61f35] duration-300 font-semibold;
+  }
+  .container {
+    @apply max-w-[1240px] mx-auto px-2 w-full;
+  }
+  .mobnav {
+    @apply w-full md:hidden absolute p-4 bg-gray-200 text-black z-50;
+  }
+  .mobnav ul {
+    @apply mb-6;
+  }
+  .mobnav li {
+    @apply py-2;
+  }
+  .logo {
+    @apply font-bold text-[#d61f35] text-4xl md:text-5xl;
+  }
+  h2 {
+    @apply text-xl md:text-3xl font-semibold;
+  }
+  h4 {
+    @apply text-lg md:text-xl;
+  }
+  #contact .form-group > input,
+  #contact .form-group > select,
+  #contact .form-group > textarea {
+    @apply w-full outline-none focus:outline-none focus:border-0 py-1 border focus:border-black rounded-sm px-2;
+  }
+  .form-group {
+    @apply flex flex-col mb-4;
+  }
+  #contact {
+    @apply bg-slate-200;
+  }
+  h3.soci {
+    @apply text-xl md:text-3xl font-semibold;
+  }
+
+  .medias > div {
+    @apply p-6 shadow-xl border bg-gray-300/40 hover:bg-[#d61f35] hover:scale-90 hover:cursor-pointer duration-500;
+  }
+  .medias-f > div {
+    @apply p-2 text-gray-500 hover:text-gray-100 duration-500;
+  }
+  #footer {
+    @apply text-gray-300;
+  }
+  /* #footer ul {
+    @apply;
+  } */
+  #footer ul li:not(:first-child) {
+    @apply mt-3 w-fit hover:mr-3 duration-500 hover:text-white;
+  }
+  .box {
+    @apply p-4 shadow-md border min-w-[280px] flex flex-col justify-center items-center;
+  }
+  #form-admin > input,
+  #form-admin > button {
+    @apply w-full bg-gray-200 my-1 py-1 px-2 outline-none rounded;
+  }
+  .dot {
+    @apply my-auto p-2 bg-white/60 hover:bg-white rounded-full;
+  }
+  .options {
+    @apply py-4;
+  }
+
+  #admin button.btn {
+    @apply px-6 py-1 bg-black text-gray-200 rounded hover:bg-[#d61f35]/90;
+  }
+  #admin button.active {
+    @apply bg-[#d61f35];
+  }
+
+  #innerOptions button.btn {
+    @apply px-6 py-1 text-sm bg-gray-500 text-gray-100 rounded hover:bg-blue-600/90;
+  }
+  #innerOptions button.active {
+    @apply bg-blue-600;
+  }
+
+  #innerRequests button.btn {
+    @apply px-6 py-1 text-sm bg-gray-500 text-gray-100 rounded hover:bg-blue-600/90;
+  }
+  #innerRequests button.active {
+    @apply bg-blue-600;
+  }
+
+  #addForm > div {
+    /* @apply border-b; */
+  }
+  #addForm > div > input,
+  #addForm > div > select,
+  #addForm > div > textarea {
+    @apply w-full bg-gray-200 my-1 py-1 px-2 outline-none rounded;
+  }
+
+  #addForm > button {
+    @apply w-full my-1 py-1 px-2 rounded;
+  }
+
+  #requestsTable thead {
+    @apply bg-gray-200;
+  }
+  /* #requestsTable thead tr {
+    @apply py-2 pr-2 text-right;
+  } */
+  #requestsTable th {
+    @apply py-2 pr-2 text-right;
+  }
+
+  #requestsTable td {
+    @apply py-1 border-b pr-2 text-right;
+  }
 }
