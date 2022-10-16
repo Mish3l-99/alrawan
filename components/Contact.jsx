@@ -1,143 +1,142 @@
 import { addDoc, collection } from "firebase/firestore";
 import Image from "next/image";
-import { useRouter } from "next/router";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
 import { db } from "../firebase";
 
 const Contact = () => {
+  let initialForm = {
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+    read: false,
+  };
   const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState(initialForm);
 
-  const nameRef = useRef();
-
-  const phoneRef = useRef();
-  const cityRef = useRef();
-  const desRef = useRef();
-
-  const program = useSelector((state) => state.program.value);
-
-  const router = useRouter();
-
-  console.log(program);
+  const setOnChange = (e) => {
+    setForm((form) => ({ ...form, [e.target.name]: e.target.value }));
+  };
 
   const submitOrder = (e) => {
     e.preventDefault();
-    const name = nameRef.current.value;
-    const phone = phoneRef.current.value;
-    const city = cityRef.current.value;
-    const destination = desRef.current.value;
 
     const createdAt = new Date().getTime();
 
-    if (phone !== "" && city !== "" && destination !== "" && name !== "") {
+    if (
+      form.name !== "" &&
+      form.email !== "" &&
+      form.phone !== "" &&
+      form.subject !== "" &&
+      form.message !== ""
+    ) {
       setLoading(true);
-      let order = {
-        name,
-        phone,
-        city,
-        destination,
-        type: "normal",
-        createdAt,
-      };
-      if (program) {
-        order = { ...order, program };
-      }
+      let order = { ...form, createdAt };
 
-      addDoc(collection(db, "orders"), order).then((res) => {
-        toast.success("تمت الاضافة بنجاح");
-        setTimeout(() => {
-          router.reload();
-        }, 2000);
+      addDoc(collection(db, "data"), order).then((res) => {
+        toast.success("Sent Successfully!");
+        setForm(initialForm);
+        setLoading(false);
       });
 
       console.log(order);
     } else {
-      toast.error("حقول فارغة !");
+      toast.error("Empty Fields!");
     }
   };
 
   return (
-    <div id="contact" className="w-full py-6">
-      <div className="container">
-        <hr />
-        <div className="mt-4 mx-auto w-fit flex items-center flex-col">
-          <h2 className="mx-auto w-fit">تواصل معنا</h2>
-          <Image alt="/" src="/icons/divider.png" width={200} height={10} />
+    <div id="contact" className="w-full relative ">
+      <div className="w-full h-[550px] relative bg-white/90">
+        <Image alt="/" src="/images/map.jpg" layout="fill" objectFit="cover" />
+      </div>
+      <div className="absolute top-0 bottom-0 left-0 right-0 w-full bg-white/90">
+        <div className="container">
+          <div className="titler pt-6">
+            <h2 className="title">Contact Us</h2>
+          </div>
+          <form
+            action=""
+            onSubmit={(e) => submitOrder(e)}
+            className="max-w-[800px] pb-8"
+            id="forma"
+          >
+            <div className="form-group">
+              <input
+                onChange={(e) => setOnChange(e)}
+                value={form.name}
+                name="name"
+                type="text"
+                placeholder="Name..."
+              />
+            </div>
+            <div className="form-group">
+              <input
+                onChange={(e) => setOnChange(e)}
+                value={form.email}
+                name="email"
+                type="email"
+                placeholder="Email..."
+              />
+            </div>
+            <div className="form-group">
+              <input
+                onChange={(e) => setOnChange(e)}
+                value={form.phone}
+                name="phone"
+                type="phone"
+                placeholder="Phone..."
+              />
+            </div>
+            <div className="form-group">
+              <input
+                onChange={(e) => setOnChange(e)}
+                value={form.subject}
+                name="subject"
+                type="text"
+                placeholder="Subject..."
+              />
+            </div>
+            <div className="form-group">
+              <textarea
+                name="message"
+                rows="5"
+                value={form.message}
+                onChange={(e) => setOnChange(e)}
+                placeholder="Message..."
+              ></textarea>
+            </div>
+
+            <label className="text-[#d61f35] text-[12px]">
+              *We will get back to you as soon as possible, you can email us at{" "}
+              <a
+                className="text-blue-600"
+                href="mailto:alrawan59@yahoo-co.uk"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                alrawan59@yahoo-co.uk
+              </a>{" "}
+              as well.
+            </label>
+            <br />
+            <div className="mt-4 flex items-center justify-center">
+              <button className="mx-auto btn btn-main flex items-center gap-x-2">
+                Send
+                {loading && (
+                  <Image
+                    src="/icons/loading.gif"
+                    alt="/"
+                    width="15"
+                    height="15"
+                  />
+                )}
+              </button>
+            </div>
+          </form>
         </div>
-        <br />
-        {/* form */}
-        <form
-          action=""
-          onSubmit={(e) => submitOrder(e)}
-          className="w-full"
-          id="contact"
-        >
-          <div className="form-group">
-            <label htmlFor="">الاسم :</label>
-            <input ref={nameRef} name="name" type="text" placeholder="..." />
-          </div>
-          <div className="form-group">
-            <label htmlFor="">رقم الجوال:</label>
-            <input
-              ref={phoneRef}
-              name="phone"
-              type="text"
-              placeholder="05********"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="">مدينتك:</label>
-            <select ref={cityRef} name="" id="">
-              <option value="">اختر</option>
-              <option>الرياض</option>
-              <option>جدة</option>
-              <option>الشرقية</option>
-              <option>أخرى</option>
-            </select>
-          </div>
-          <div className="form-group">
-            <label htmlFor="">وجهتك:</label>
-            <select ref={desRef} name="" id="">
-              <option value="">اختر</option>
-              <option value="جورجيا">جورجيا</option>
-              <option value="البوسنة">البوسنة</option>
-              <option value="تركيا">تركيا</option>
-              <option value="أذربيجان">أذربيجان</option>
-              <option value="رحلات أوروبا">رحلات أوروبا</option>
-              <option value="رحلات أوروبا جماعية">رحلات أوروبا جماعية</option>
-              <option value="المالديف">المالديف</option>
-              <option value="ماليزيا">ماليزيا</option>
-              <option value="تايلند">تايلند</option>
-              <option value="موريشيوس">موريشيوس</option>
-              <option value="ألبانيا">ألبانيا</option>
-              <option value="كروز بحري">كروز بحري</option>
-              <option value="حجز فنادق">حجز فنادق</option>
-              <option value="حجز طيران">حجز طيران</option>
-              <option value="تاشيرات علاجية">تاشيرات علاجية</option>
-              <option value="تأشيرات">تأشيرات</option>
-              <option value="تاشيرات دراسية">تاشيرات دراسية</option>
-              <option value="رخصة دولية">رخصة دولية</option>
-            </select>
-          </div>
-          <label className="text-[#d61f35]">
-            *جميع الأسعار في الموقع تشمل قيمة الضريبة المضافة
-          </label>
-          <br />
-          <div className="flex items-center justify-center">
-            <button className="mx-auto btn btn-main flex items-center gap-x-2">
-              ارسال
-              {loading && (
-                <Image
-                  src="/icons/loading.gif"
-                  alt="/"
-                  width="15"
-                  height="15"
-                />
-              )}
-            </button>
-          </div>
-        </form>
       </div>
     </div>
   );

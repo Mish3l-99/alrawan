@@ -4,7 +4,7 @@ import Carousel from "./helpers/Carousel";
 
 const Hero = () => {
   return (
-    <div className="w-full h-fit">
+    <div id="home" className="w-full h-fit">
       <div className="">
         <Carousel />
         {/* <Slider {...settings}>

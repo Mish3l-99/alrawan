@@ -1,4 +1,5 @@
-import Link from "next/link";
+import Image from "next/image";
+import { Link } from "react-scroll";
 import React, { useEffect, useState } from "react";
 import { FiX, FiMenu } from "react-icons/fi";
 
@@ -12,33 +13,85 @@ const Navbar = () => {
     <div id="navbar" className="w-full shadow-md bg-white">
       <div className="nav-container">
         <div className="">
-          <Link href="/">
-            <h1 className="logo">Logo</h1>
+          <Link
+            activeClass="active"
+            to="home"
+            spy={true}
+            smooth={true}
+            offset={0}
+            duration={300}
+          >
+            <div className="flex items-center gap-x-2">
+              <Image alt="/" src="/logo/logo.png" width={43} height={43} />
+              <Image alt="/" src="/logo/alrawan.png" width={140} height={30} />
+            </div>
           </Link>
         </div>
-        <div className="flex justify-between items-center ">
-          <ul className="hidden md:flex">
+        <div className="mr-12 flex justify-between items-center ">
+          <ul className="text-lg hidden md:flex items-center navul">
             <li>
-              <Link href="/">الرئيسية</Link>
+              {/* <Link href="/#home">Home</Link> */}
+              <Link
+                activeClass="active"
+                to="home"
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={300}
+                // onSetActive={this.handleSetActive}
+              >
+                Home
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                activeClass="active"
+                to="about"
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={300}
+              >
+                About Us
+              </Link>
             </li>
             <li>
-              <Link href="/contact">طلب تواصل</Link>
+              <Link
+                activeClass="active"
+                to="vision"
+                spy={true}
+                smooth={true}
+                offset={-20}
+                duration={300}
+              >
+                Our Vision
+              </Link>
             </li>
             <li>
-              <Link href="/pages/about">من نحن</Link>
+              <Link
+                activeClass="active"
+                to="values"
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={300}
+              >
+                Our Values
+              </Link>
             </li>
-            <li>
-              <Link href="/complaint">شكوى</Link>
+            <li className="btn btn-main text-md">
+              <Link
+                activeClass="active"
+                to="contact"
+                spy={true}
+                smooth={true}
+                offset={0}
+                duration={300}
+              >
+                Contact
+              </Link>
             </li>
-            <li>
-              <Link href="/employment_order">توظيف</Link>
-            </li>
-            <li>
-              <Link href="/company_order">طلبات الشركات</Link>
-            </li>
-            {/* <li>
-              <Link href="/">المجلة</Link>
-            </li> */}
           </ul>
         </div>
         {/* <div className="hidden md:flex items-center px-2">
@@ -64,29 +117,73 @@ const Navbar = () => {
       >
         <ul className="">
           <li>
-            <Link href="/">الرئيسية</Link>
+            <Link
+              activeClass="active"
+              to="home"
+              spy={true}
+              smooth={true}
+              offset={0}
+              duration={300}
+              onClick={() => setMobNav(false)}
+            >
+              Home
+            </Link>
           </li>
           <li>
-            <Link href="/contact">طلب تواصل</Link>
+            <Link
+              activeClass="active"
+              to="about"
+              spy={true}
+              smooth={true}
+              offset={0}
+              duration={300}
+              onClick={() => setMobNav(false)}
+            >
+              About Us
+            </Link>
           </li>
           <li>
-            <Link href="/pages/about">من نحن</Link>
+            <Link
+              activeClass="active"
+              to="vision"
+              spy={true}
+              smooth={true}
+              offset={-20}
+              duration={300}
+              onClick={() => setMobNav(false)}
+            >
+              Our Vision
+            </Link>
           </li>
           <li>
-            <Link href="/complaint">شكوى</Link>
-          </li>
-          <li>
-            <Link href="/employment_order">توظيف</Link>
-          </li>
-          <li>
-            <Link href="/company_order">طلبات الشركات</Link>
+            <Link
+              activeClass="active"
+              to="values"
+              spy={true}
+              smooth={true}
+              offset={0}
+              duration={300}
+              onClick={() => setMobNav(false)}
+            >
+              Our Values
+            </Link>
           </li>
           {/* <li>
-            <Link href="/">المجلة</Link>
+            <Link href="/">Contact</Link>
           </li> */}
         </ul>
         <div className="flex flex-col">
-          <button className="">Use DeFi</button>
+          <Link
+            activeClass="active"
+            to="contact"
+            spy={true}
+            smooth={true}
+            offset={0}
+            duration={300}
+            onClick={() => setMobNav(false)}
+          >
+            <button className="btn btn-main w-full">Contact</button>
+          </Link>
         </div>
       </div>
     </div>

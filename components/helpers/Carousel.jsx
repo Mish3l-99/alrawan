@@ -1,13 +1,13 @@
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "../../firebase";
 import Loading from "./Loading";
 
 const Carousel = () => {
-  const [pics, setPics] = useState();
+  const [pics, setPics] = useState(["khartoum.webp"]);
+  // const [pics, setPics] = useState(["khartoum.webp", "b.jpeg"]);
   const [current, setCurrent] = useState();
 
   const timeoutRef = useRef(null);
@@ -52,33 +52,45 @@ const Carousel = () => {
     };
   }, [current, pics]);
 
-  useEffect(() => {
-    getDoc(doc(db, "settings", "slider")).then((res) => {
-      setPics(res.data().pictures);
-    });
-  }, []);
-
   return (
     <div>
-      <div className="w-full h-[600px] relative">
+      <div className="w-full h-[300px] md:h-[350px] relative">
         {!pics || !current ? (
           <Loading />
         ) : (
           <>
             {current && (
-              <Image alt="/" src={current} layout="fill" objectFit="cover" />
+              <Image
+                alt="/"
+                src={"/images/" + current}
+                layout="fill"
+                objectFit="cover"
+              />
             )}
+            <div className="absolute w-full h-full bg-black/80 flex justify-between px-3">
+              <div className="dot" onClick={() => goNext()}>
+                <GrFormPrevious />
+              </div>
+              <div className="w-full md:px-4 py-12">
+                <div className="py-2 md:py-12 md:pl-40">
+                  <h2 className="text-gray-300 text-3xl md:text-5xl">
+                    Welcome to Alrawan Marketing Co.
+                  </h2>
+                  <div className="mt-12 md:mt-12">
+                    <Link href="/">
+                      <div className="w-fit cursor-pointer py-1 px-4 md:py-2 md:px-6 bg-[#3464b6] md:text-2xl rounded text-gray-200 hover:bg-blue-600 hover:scale-105 duration-500">
+                        Know More
+                      </div>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <div className="dot" onClick={() => goPrev()}>
+                <GrFormNext />
+              </div>
+            </div>
           </>
         )}
-
-        <div className="absolute w-full h-full bg-black/40 flex justify-between px-3">
-          <div className="dot" onClick={() => goNext()}>
-            <GrFormNext />
-          </div>
-          <div className="dot" onClick={() => goPrev()}>
-            <GrFormPrevious />
-          </div>
-        </div>
       </div>
     </div>
   );
