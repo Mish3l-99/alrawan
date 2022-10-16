@@ -50,8 +50,10 @@ const Requests = () => {
     e.preventDefault();
     setToOpen(null);
     setToOpen(order);
-    // mark as read
-    markAsRead(order.id);
+    // mark as read if not read
+    if (!order.read) {
+      markAsRead(order.id);
+    }
     openModal();
   };
 
